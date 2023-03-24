@@ -1,0 +1,32 @@
+<hinv-header></hinv-header>
+<!-- interpolation syntax - {{hotelName}}  and  [innerText] for any valid html property-->
+<h1>welcome to {{ hotelName }}</h1>
+<div [hidden]="hideRooms">
+  Number of rooms:
+  <div
+    *ngIf="rooms.availableRooms && rooms.availableRooms > 0"
+    [ngStyle]="{ color: rooms.availableRooms ? 'yellow' : 'red' }"
+    [innerText]="numberOfRooms"
+  ></div>
+</div>
+<!-- json pipe for objects -->
+<!-- {{ roomList | json }} -->
+<!-- ngIf its an example of DIRECTIVES, its a logic that allowes us to interact with our project, dom elements etc -->
+<!-- THERE IS 2 types of directives : structural(modify dom, example ngFor) and attributes(add/remove smt to element, cant add remove dom ) -->
+<!-- they can be in build like ngIf -->
+<!-- this example is better than hidden cause hidden doest remove element from dom tree if false => perfomance issue -->
+
+<div *ngIf="selectedRoom">{{ selectedRoom | json }}</div>
+<div>
+  <button (click)="addRoom()">add Room</button>
+</div>
+<div *ngIf="rooms.availableRooms && rooms.availableRooms > 0">
+  <!-- $event - event that we receive from child component -->
+  <hinv-rooms-list
+    (selectedRoom)="selectRoom($event)"
+    [rooms]="roomList"
+    [title]="title"
+  ></hinv-rooms-list>
+</div>
+<!-- event binding - banana syntax () -->
+<button (click)="toggle()">Toggle</button>

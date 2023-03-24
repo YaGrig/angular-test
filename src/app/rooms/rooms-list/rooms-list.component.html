@@ -1,0 +1,42 @@
+<h2>{{ title | json }}</h2>
+<table class="table">
+  <tr>
+    <th>index</th>
+    <th>even/odd</th>
+    <th>Room Number</th>
+    <th>Room type</th>
+    <th>Room price</th>
+    <th>Room amenities</th>
+    <th>checkin Time</th>
+    <th>checkout Time</th>
+    <th>Rating</th>
+    <th>Select room</th>
+  </tr>
+  <!-- ngFor - for loop with access to even odd, also index value -->
+  <tr
+    [ngClass]="e ? 'even' : 'odd'"
+    *ngFor="
+      let room of rooms | slice : 0 : 5;
+      let e = even;
+      let o = odd;
+      let i = index
+    "
+  >
+    <!-- example of percent pipe -->
+    <td>{{ i | percent }}</td>
+    <td>{{ e ? "even" : "odd" }}</td>
+    <td>{{ room.roomNumber }}</td>
+    <td>{{ room.roomType }}</td>
+    <!-- example of currency, to change type change INR to USD or smt -->
+    <td>{{ room.price | currency : "INR" }}</td>
+    <!-- example of lower/upper/title case pipe -->
+    <td>{{ room.amenities | lowercase }}</td>
+    <!-- example of date pipe, how we want to see out data, defferent types can be found on angular site "datepipe" -->
+    <td>{{ room.checkInTime | date : "short" }}</td>
+    <td>{{ room.checkOutTime }}</td>
+    <td>{{ room.rating | number : "1.1-1" : "en-us" }}</td>
+    <td>
+      <button class="btn btn-primary" (click)="selectRoom(room)">Select</button>
+    </td>
+  </tr>
+</table>
